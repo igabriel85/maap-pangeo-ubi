@@ -40,9 +40,14 @@ RUN useradd -u 1234 -G wheel,root -d /home/user --shell /bin/bash -m user && \
     chmod -R g=u /etc/passwd /etc/group /home && \
     chmod +x /entrypoint.sh
 
+# set user as the owner of /opt
+RUN chown -R 1234:0 /opt && \
+    chmod -R g=u /opt
+
 # Set CONDA environment variables
-ENV CONDA_DIR /home/user/conda
+ENV CONDA_DIR /opt/conda
 ENV CONDA_ENV pymaap
+
 
 # Appending to PATH conda and conda env
 ENV PATH "$PATH:$CONDA_DIR/envs/pymaap/bin"
@@ -53,7 +58,6 @@ ENV PATH "$PATH:$CONDA_DIR/bin"
 ENV NB_PYTHON_PREFIX=${CONDA_DIR}/envs/${CONDA_ENV} \
     # Home directory of our non-root user
     HOME=/home/user
-
 
 USER 1234
 #ENV HOME=/home/user
