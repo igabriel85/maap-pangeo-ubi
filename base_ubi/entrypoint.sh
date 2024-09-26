@@ -12,6 +12,14 @@
 #  echo "envs_dirs:" > $HOME/.condarc
 #fi
 
+#check if $PROJECT_SOURCE/envs exists
+if [ -d $PROJECT_SOURCE/envs ]; then
+  echo "Directory $PROJECT_SOURCE/envs exists"
+else
+  echo "Directory $PROJECT_SOURCE/envs does not exist creating it"
+  mkdir -p $PROJECT_SOURCE/envs
+fi
+
 # check if envvar set if not set it
 if [ -z "$CONDA_ENVS_PATH" ]; then
   echo "CONDA_ENVS_PATH not set"
